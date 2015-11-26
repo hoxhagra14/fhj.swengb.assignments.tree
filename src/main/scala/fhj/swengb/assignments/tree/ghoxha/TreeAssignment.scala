@@ -40,8 +40,11 @@ object Graph {
     * @return
     */
   def traverse[A, B](tree: Tree[A])(convert: A => B): Seq[B] = {
-  ???
-
+    def map[A, B](t: Tree[A],acc: Seq[B])(convert: A => B): Seq[B] = t match {
+      case Node(v) => convert(v) +: acc
+      case Branch(l,r) => map(l,acc)(convert) ++ acc ++ map(r,acc)(convert)
+    }
+    map(tree,acc = Nil)(convert)
   }
 
   /**
